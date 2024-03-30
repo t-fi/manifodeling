@@ -2,6 +2,7 @@ from typing import Any, Optional, overload, Typing, Sequence, Iterable, Union, C
 from enum import Enum
 import manifold3d
 
+
 class CrossSection:
     """
     Two-dimensional cross sections guaranteed to be without self-intersections, or overlaps between polygons (from construction onwards). This class makes use of the [Clipper2](http://www.angusj.com/clipper2/Docs/Overview.htm) library for polygon clipping (boolean) and offsetting operations.
@@ -19,28 +20,28 @@ class CrossSection:
         contours.
         """
         ...
-    
+
     @overload
     def __init__(self) -> None:
         """
         The default constructor is an empty cross-section (containing no contours).
         """
         ...
-    
+
     def area(self) -> float:
         """
         Return the total area covered by complex polygons making up the
         CrossSection.
         """
         ...
-    
+
     def batch_boolean(cross_sections: list[manifold3d.CrossSection], op: manifold3d.OpType) -> manifold3d.CrossSection:
         """
         Perform the given boolean operation on a list of CrossSections. In case of
         Subtract, all CrossSections in the tail are differenced from the head.
         """
         ...
-    
+
     def batch_hull(cross_sections: list[manifold3d.CrossSection]) -> manifold3d.CrossSection:
         """
         Compute the convex hull enveloping a set of cross-sections.
@@ -48,13 +49,13 @@ class CrossSection:
         convex hull.
         """
         ...
-    
+
     def bounds(self) -> tuple:
         """
         Return bounding box of CrossSection as tuple(min_x, min_y, max_x, max_y)
         """
         ...
-    
+
     def circle(radius: float, circular_segments: int = 0) -> manifold3d.CrossSection:
         """
         Constructs a circle of a given radius.
@@ -63,14 +64,14 @@ class CrossSection:
         calculated by the static Quality defaults according to the radius.
         """
         ...
-    
+
     def compose(cross_sections: list[manifold3d.CrossSection]) -> manifold3d.CrossSection:
         """
         Construct a CrossSection from a vector of other CrossSections (batch
         boolean union).
         """
         ...
-    
+
     def decompose(self) -> list[manifold3d.CrossSection]:
         """
         This operation returns a vector of CrossSections that are topologically
@@ -78,8 +79,9 @@ class CrossSection:
         holes.
         """
         ...
-    
-    def extrude(self, height: float, n_divisions: int = 0, twist_degrees: float = 0.0, scale_top: Floatx2 = (1.0, 1.0)) -> manifold3d.Manifold:
+
+    def extrude(self, height: float, n_divisions: int = 0, twist_degrees: float = 0.0,
+                scale_top: Floatx2 = (1.0, 1.0)) -> manifold3d.Manifold:
         """
         Constructs a manifold from a set of polygons by extruding them along the
         Z-axis.
@@ -99,13 +101,13 @@ class CrossSection:
         Default {1, 1}.
         """
         ...
-    
+
     def hull(self) -> manifold3d.CrossSection:
         """
         Compute the convex hull of this cross-section.
         """
         ...
-    
+
     def hull_points(pts: FloatNx2) -> manifold3d.CrossSection:
         """
         Compute the convex hull of a set of points. If the given points are fewer
@@ -114,13 +116,13 @@ class CrossSection:
         hull.
         """
         ...
-    
+
     def is_empty(self) -> bool:
         """
         Does the CrossSection contain any contours?
         """
         ...
-    
+
     def mirror(self, ax: Floatx2) -> manifold3d.CrossSection:
         """
         Mirror this CrossSection over the arbitrary axis described by the unit form
@@ -130,21 +132,22 @@ class CrossSection:
         :param ax: the axis to be mirrored over
         """
         ...
-    
+
     def num_contour(self) -> int:
         """
         Return the number of contours (both outer and inner paths) in the
         CrossSection.
         """
         ...
-    
+
     def num_vert(self) -> int:
         """
         Return the number of vertices in the CrossSection.
         """
         ...
-    
-    def offset(self, delta: float, join_type: manifold3d.JoinType, miter_limit: float = 2.0, circular_segments: int = 0) -> manifold3d.CrossSection:
+
+    def offset(self, delta: float, join_type: manifold3d.JoinType, miter_limit: float = 2.0,
+               circular_segments: int = 0) -> manifold3d.CrossSection:
         """
         Inflate the contours in CrossSection by the specified delta, handling
         corners according to the given JoinType.
@@ -165,7 +168,7 @@ class CrossSection:
         defaults according to the radius.
         """
         ...
-    
+
     def revolve(self, circular_segments: int = 0, revolve_degrees: float = 360.0) -> manifold3d.Manifold:
         """
         Constructs a manifold from a set of polygons by revolving this cross-section
@@ -179,7 +182,7 @@ class CrossSection:
         :param revolve_degrees: Number of degrees to revolve. Default is 360 degrees.
         """
         ...
-    
+
     def rotate(self, degrees: float) -> manifold3d.CrossSection:
         """
         Applies a (Z-axis) rotation to the CrossSection, in degrees. This operation
@@ -187,7 +190,7 @@ class CrossSection:
         :param degrees: degrees about the Z-axis to rotate.
         """
         ...
-    
+
     def scale(self, s: float) -> None:
         """
         Scale this CrossSection in space. This operation can be chained. Transforms are combined and applied lazily.
@@ -195,7 +198,7 @@ class CrossSection:
         :param s: The scalar to multiply every vertex by per component.
         """
         ...
-    
+
     @overload
     def scale(self, scale: Floatx2) -> manifold3d.CrossSection:
         """
@@ -204,7 +207,7 @@ class CrossSection:
         :param v: The vector to multiply every vertex by per component.
         """
         ...
-    
+
     def simplify(self, epsilon: float = 1e-06) -> manifold3d.CrossSection:
         """
         Remove vertices from the contours in this CrossSection that are less than
@@ -218,7 +221,7 @@ class CrossSection:
         offseting operations are to be performed, which would compound the issue.
         """
         ...
-    
+
     def square(size: Floatx2, center: bool = False) -> manifold3d.CrossSection:
         """
         Constructs a square with the given XY dimensions. By default it is
@@ -228,13 +231,13 @@ class CrossSection:
         :param center: Set to true to shift the center to the origin.
         """
         ...
-    
+
     def to_polygons(self) -> list[FloatNx2]:
         """
         Return the contours of this CrossSection as a Polygons.
         """
         ...
-    
+
     def transform(self, m: Float2x3) -> manifold3d.CrossSection:
         """
         Transform this CrossSection in space. The first two columns form a 2x2
@@ -243,7 +246,7 @@ class CrossSection:
         :param m: The affine transform matrix to apply to all the vertices.
         """
         ...
-    
+
     def translate(self, v: Floatx2) -> manifold3d.CrossSection:
         """
         Move this CrossSection in space. This operation can be chained. Transforms
@@ -251,7 +254,7 @@ class CrossSection:
         :param v: The vector to add to every vertex.
         """
         ...
-    
+
     def warp(self, warp_func: Callable[[Floatx2], Floatx2]) -> manifold3d.CrossSection:
         """
         Move the vertices of this CrossSection (creating a new one) according to
@@ -261,7 +264,7 @@ class CrossSection:
         :param warp_func: A function that modifies a given vertex position.
         """
         ...
-    
+
     def warp_batch(self, warp_func: Callable[[FloatNx2], None]) -> manifold3d.CrossSection:
         """
         Same as CrossSection::Warp but calls warpFunc with
@@ -270,60 +273,64 @@ class CrossSection:
         :param warp_func: A function that modifies multiple vertex positions.
         """
         ...
-    
+
+
 class Error(Enum):
     """
     <attribute '__doc__' of 'Error' objects>
     """
 
     FaceIDWrongLength: Any
-    
+
     InvalidConstruction: Any
-    
+
     MergeIndexOutOfBounds: Any
-    
+
     MergeVectorsDifferentLengths: Any
-    
+
     MissingPositionProperties: Any
-    
+
     NoError: Any
-    
+
     NonFiniteVertex: Any
-    
+
     NotManifold: Any
-    
+
     PropertiesWrongLength: Any
-    
+
     RunIndexWrongLength: Any
-    
+
     TransformWrongLength: Any
-    
+
     VertexOutOfBounds: Any
-    
+
+
 class FillRule(Enum):
     """
     <attribute '__doc__' of 'FillRule' objects>
     """
 
     EvenOdd: Any
-    
+
     Negative: Any
-    
+
     NonZero: Any
-    
+
     Positive: Any
-    
+
+
 class JoinType(Enum):
     """
     <attribute '__doc__' of 'JoinType' objects>
     """
 
     Miter: Any
-    
+
     Round: Any
-    
+
     Square: Any
-    
+
+
 class Manifold:
     """
     None
@@ -349,14 +356,14 @@ class Manifold:
         properties in the [-1, 1] range.
         """
         ...
-    
+
     @overload
     def __init__(self) -> None:
         """
         Construct an empty Manifold.
         """
         ...
-    
+
     def as_original(self) -> manifold3d.Manifold:
         """
         This function condenses all coplanar faces in the relation, and
@@ -365,27 +372,27 @@ class Manifold:
         they do not match across an edge, that edge will be kept.
         """
         ...
-    
+
     def batch_boolean(manifolds: list[manifold3d.Manifold], op: manifold3d.OpType) -> manifold3d.Manifold:
         """
         Perform the given boolean operation on a list of Manifolds. In case of
         Subtract, all Manifolds in the tail are differenced from the head.
         """
         ...
-    
+
     def batch_hull(manifolds: list[manifold3d.Manifold]) -> manifold3d.Manifold:
         """
         Compute the convex hull enveloping a set of manifolds.
         :param manifolds: A vector of manifolds over which to compute a convex hull.
         """
         ...
-    
+
     def bounding_box(self) -> tuple:
         """
         Gets the manifold bounding box as a tuple (xmin, ymin, zmin, xmax, ymax, zmax).
         """
         ...
-    
+
     def calculate_curvature(self, gaussian_idx: int, mean_idx: int) -> manifold3d.Manifold:
         """
         Curvature is the inverse of the radius of curvature, and signed such that
@@ -402,7 +409,7 @@ class Manifold:
         will be automatically expanded to include the channel index specified.
         """
         ...
-    
+
     def compose(manifolds: list[manifold3d.Manifold]) -> manifold3d.Manifold:
         """
         Constructs a new manifold from a vector of other manifolds. This is a purely
@@ -411,7 +418,7 @@ class Manifold:
         :param manifolds: A vector of Manifolds to lazy-union together.
         """
         ...
-    
+
     def cube(size: Floatx3 = [1.0, 1.0, 1.0], center: bool = False) -> manifold3d.Manifold:
         """
         Constructs a unit cube (edge lengths all one), by default in the first
@@ -421,8 +428,9 @@ class Manifold:
         :param center: Set to true to shift the center to the origin.
         """
         ...
-    
-    def cylinder(height: float, radius_low: float, radius_high: float = -1.0, circular_segments: int = 0, center: bool = False) -> manifold3d.Manifold:
+
+    def cylinder(height: float, radius_low: float, radius_high: float = -1.0, circular_segments: int = 0,
+                 center: bool = False) -> manifold3d.Manifold:
         """
         A convenience constructor for the common case of extruding a circle. Can also
         form cones if both radii are specified.
@@ -436,7 +444,7 @@ class Manifold:
         origin at the bottom.
         """
         ...
-    
+
     def decompose(self) -> list[manifold3d.Manifold]:
         """
         This operation returns a vector of Manifolds that are topologically
@@ -444,8 +452,9 @@ class Manifold:
         containing a copy of the original. It is the inverse operation of Compose().
         """
         ...
-    
-    def extrude(crossSection: manifold3d.CrossSection, height: float, n_divisions: int = 0, twist_degrees: float = 0.0, scale_top: Floatx2 = (1.0, 1.0)) -> manifold3d.Manifold:
+
+    def extrude(crossSection: manifold3d.CrossSection, height: float, n_divisions: int = 0, twist_degrees: float = 0.0,
+                scale_top: Floatx2 = (1.0, 1.0)) -> manifold3d.Manifold:
         """
         Constructs a manifold from a set of polygons by extruding them along the
         Z-axis.
@@ -465,7 +474,7 @@ class Manifold:
         Default {1, 1}.
         """
         ...
-    
+
     def genus(self) -> int:
         """
         The genus is a topological property of the manifold, representing the number
@@ -473,13 +482,13 @@ class Manifold:
         mesh, so it is best to call Decompose() first.
         """
         ...
-    
+
     def hull(self) -> manifold3d.Manifold:
         """
         Compute the convex hull of this manifold.
         """
         ...
-    
+
     def hull_points(pts: FloatNx3) -> manifold3d.Manifold:
         """
         Compute the convex hull of a set of points. If the given points are fewer
@@ -488,13 +497,13 @@ class Manifold:
         hull.
         """
         ...
-    
+
     def is_empty(self) -> bool:
         """
         Does the Manifold have any triangles?
         """
         ...
-    
+
     def mirror(self, v: Floatx3) -> manifold3d.Manifold:
         """
         Mirror this Manifold over the plane described by the unit form of the given
@@ -504,19 +513,19 @@ class Manifold:
         :param normal: The normal vector of the plane to be mirrored over
         """
         ...
-    
+
     def num_edge(self) -> int:
         """
         The number of edges in the Manifold.
         """
         ...
-    
+
     def num_prop(self) -> int:
         """
         The number of properties per vertex in the Manifold.
         """
         ...
-    
+
     def num_prop_vert(self) -> int:
         """
         The number of property vertices in the Manifold. This will always be >=
@@ -524,19 +533,19 @@ class Manifold:
         properties on different neighboring triangles.
         """
         ...
-    
+
     def num_tri(self) -> int:
         """
         The number of triangles in the Manifold.
         """
         ...
-    
+
     def num_vert(self) -> int:
         """
         The number of vertices in the Manifold.
         """
         ...
-    
+
     def original_id(self) -> int:
         """
         If this mesh is an original, this returns its meshID that can be referenced
@@ -544,7 +553,7 @@ class Manifold:
         returns -1.
         """
         ...
-    
+
     def precision(self) -> float:
         """
         Returns the precision of this Manifold's vertices, which tracks the
@@ -554,14 +563,14 @@ class Manifold:
         [&epsilon;-valid](https://github.com/elalish/manifold/wiki/Manifold-Library#definition-of-%CE%B5-valid).
         """
         ...
-    
+
     def project(self) -> manifold3d.CrossSection:
         """
         Returns a cross section representing the projected outline of this object
         onto the X-Y plane.
         """
         ...
-    
+
     def refine(self, n: int) -> manifold3d.Manifold:
         """
         Increase the density of the mesh by splitting every edge into n pieces. For
@@ -573,7 +582,7 @@ class Manifold:
         :param n: The number of pieces to split every edge into. Must be > 1.
         """
         ...
-    
+
     def refine_to_length(self, length: float) -> manifold3d.Manifold:
         """
         Increase the density of the mesh by splitting each edge into pieces of
@@ -584,7 +593,7 @@ class Manifold:
         :param length: The length that edges will be broken down to.
         """
         ...
-    
+
     def reserve_ids(n: int) -> int:
         """
         Returns the first of n sequential new unique mesh IDs for marking sets of
@@ -592,8 +601,9 @@ class Manifold:
         Mesh.runOriginalID vector.
         """
         ...
-    
-    def revolve(crossSection: manifold3d.CrossSection, circular_segments: int = 0, revolve_degrees: float = 360.0) -> manifold3d.Manifold:
+
+    def revolve(crossSection: manifold3d.CrossSection, circular_segments: int = 0,
+                revolve_degrees: float = 360.0) -> manifold3d.Manifold:
         """
         Constructs a manifold from a set of polygons by revolving this cross-section
         around its Y-axis and then setting this as the Z-axis of the resulting
@@ -606,7 +616,7 @@ class Manifold:
         :param revolve_degrees: Number of degrees to revolve. Default is 360 degrees.
         """
         ...
-    
+
     def rotate(self, v: Floatx3) -> manifold3d.Manifold:
         """
         Applies an Euler angle rotation to the manifold, first about the X axis, then
@@ -618,7 +628,7 @@ class Manifold:
         :param v: [X, Y, Z] rotation in degrees.
         """
         ...
-    
+
     def scale(self, s: float) -> None:
         """
         Scale this Manifold in space. This operation can be chained. Transforms are combined and applied lazily.
@@ -626,7 +636,7 @@ class Manifold:
         :param s: The scalar to multiply every vertex by component.
         """
         ...
-    
+
     @overload
     def scale(self, v: Floatx3) -> manifold3d.Manifold:
         """
@@ -635,8 +645,9 @@ class Manifold:
         :param v: The vector to multiply every vertex by per component.
         """
         ...
-    
-    def set_properties(self, new_num_prop: int, f: Callable[[Floatx3, numpy.typing.NDArray], object]) -> manifold3d.Manifold:
+
+    def set_properties(self, new_num_prop: int,
+                       f: Callable[[Floatx3, numpy.typing.NDArray], object]) -> manifold3d.Manifold:
         """
         Create a new copy of this manifold with updated vertex properties by
         supplying a function that takes the existing position and properties as
@@ -647,7 +658,7 @@ class Manifold:
         :param prop_func: A function that modifies the properties of a given vertex.
         """
         ...
-    
+
     def slice(self, height: float) -> manifold3d.CrossSection:
         """
         Returns the cross section of this object parallel to the X-Y plane at the
@@ -656,8 +667,9 @@ class Manifold:
         the top of the bounding box will return empty.
         """
         ...
-    
-    def smooth(mesh: manifold3d.Mesh, sharpened_edges: list[int] = [], edge_smoothness: list[float] = []) -> manifold3d.Manifold:
+
+    def smooth(mesh: manifold3d.Mesh, sharpened_edges: list[int] = [],
+               edge_smoothness: list[float] = []) -> manifold3d.Manifold:
         """
         Constructs a smooth version of the input mesh by creating tangents; this
         method will throw if you have supplied tangents with your mesh already. The
@@ -684,7 +696,7 @@ class Manifold:
         cones to be formed.
         """
         ...
-    
+
     def sphere(radius: float, circular_segments: int = 0) -> manifold3d.Manifold:
         """
         Constructs a geodesic sphere of a given radius.
@@ -696,7 +708,7 @@ class Manifold:
         calculated by the static Defaults.
         """
         ...
-    
+
     def split(self, cutter: manifold3d.Manifold) -> tuple[manifold3d.Manifold, manifold3d.Manifold]:
         """
         Split cuts this manifold in two using the cutter manifold. The first result
@@ -705,7 +717,7 @@ class Manifold:
         :param cutter:
         """
         ...
-    
+
     def split_by_plane(self, normal: Floatx3, origin_offset: float) -> tuple[manifold3d.Manifold, manifold3d.Manifold]:
         """
         Convenient version of Split() for a half-space.
@@ -716,7 +728,7 @@ class Manifold:
         direction of the normal vector.
         """
         ...
-    
+
     def status(self) -> manifold3d.Error:
         """
         Returns the reason for an input Mesh producing an empty Manifold. This Status
@@ -727,21 +739,21 @@ class Manifold:
         precision to be collapsed to nothing.
         """
         ...
-    
+
     def surface_area(self) -> float:
         """
         Get the surface area of the manifold
         This is clamped to zero for a given face if they are within the Precision().
         """
         ...
-    
+
     def tetrahedron() -> manifold3d.Manifold:
         """
         Constructs a tetrahedron centered at the origin with one vertex at (1,1,1)
         and the rest at similarly symmetric points.
         """
         ...
-    
+
     def to_mesh(self, normal_idx: Intx3 = [0, 0, 0]) -> manifold3d.Mesh:
         """
         The most complete output of this library, returning a Mesh that is designed
@@ -756,7 +768,7 @@ class Manifold:
         Meshs must use the same channels for their normals.
         """
         ...
-    
+
     def transform(self, m: Float3x4) -> manifold3d.Manifold:
         """
         Transform this Manifold in space. The first three columns form a 3x3 matrix
@@ -765,7 +777,7 @@ class Manifold:
         :param m: The affine transform matrix to apply to all the vertices.
         """
         ...
-    
+
     def translate(self, t: Floatx3) -> manifold3d.Manifold:
         """
         Move this Manifold in space. This operation can be chained. Transforms are
@@ -773,7 +785,7 @@ class Manifold:
         :param v: The vector to add to every vertex.
         """
         ...
-    
+
     def trim_by_plane(self, normal: Floatx3, origin_offset: float) -> manifold3d.Manifold:
         """
         Identical to SplitByPlane(), but calculating and returning only the first
@@ -784,14 +796,14 @@ class Manifold:
         direction of the normal vector.
         """
         ...
-    
+
     def volume(self) -> float:
         """
         Get the volume of the manifold
         This is clamped to zero for a given face if they are within the Precision().
         """
         ...
-    
+
     def warp(self, warp_func: Callable[[Floatx3], Floatx3]) -> manifold3d.Manifold:
         """
         This function does not change the topology, but allows the vertices to be
@@ -802,7 +814,7 @@ class Manifold:
         :param warp_func: A function that modifies a given vertex position.
         """
         ...
-    
+
     def warp_batch(self, warp_func: Callable[[FloatNx3], None]) -> manifold3d.Manifold:
         """
         Same as Manifold::Warp but calls warpFunc with with
@@ -811,31 +823,38 @@ class Manifold:
         :param warp_func: A function that modifies multiple vertex positions.
         """
         ...
-    
+
+
 class Mesh:
     """
     None
     """
 
-    def __init__(self, vert_properties: numpy.typing.NDArray, tri_verts: numpy.typing.NDArray, merge_from_vert: Optional[numpy.typing.NDArray] = None, merge_to_vert: Optional[numpy.typing.NDArray] = None, run_index: Optional[numpy.typing.NDArray] = None, run_original_id: Optional[numpy.typing.NDArray] = None, run_transform: Optional[numpy.typing.NDArray] = None, face_id: Optional[numpy.typing.NDArray] = None, halfedge_tangent: Optional[numpy.typing.NDArray] = None, precision: float = 0) -> None:
+    def __init__(self, vert_properties: numpy.typing.NDArray, tri_verts: numpy.typing.NDArray,
+                 merge_from_vert: Optional[numpy.typing.NDArray] = None,
+                 merge_to_vert: Optional[numpy.typing.NDArray] = None, run_index: Optional[numpy.typing.NDArray] = None,
+                 run_original_id: Optional[numpy.typing.NDArray] = None,
+                 run_transform: Optional[numpy.typing.NDArray] = None, face_id: Optional[numpy.typing.NDArray] = None,
+                 halfedge_tangent: Optional[numpy.typing.NDArray] = None, precision: float = 0) -> None:
         ...
-    
+
     @property
     def face_id(self) -> list[int]:
         ...
-    
+
     @property
     def halfedge_tangent(self) -> numpy.typing.NDArray:
         ...
-    
-    def level_set(f: Callable[[float, float, float], float], bounds: list[float], edgeLength: float, level: float = 0.0) -> manifold3d.Mesh:
+
+    def level_set(f: Callable[[float, float, float], float], bounds: list[float], edgeLength: float,
+                  level: float = 0.0) -> manifold3d.Mesh:
         """
         Constructs a level-set Mesh from the input Signed-Distance Function (SDF) This uses a form of Marching Tetrahedra (akin to Marching Cubes, but better for manifoldness). Instead of using a cubic grid, it uses a body-centered cubic grid (two shifted cubic grids). This means if your function's interior exceeds the given bounds, you will see a kind of egg-crate shape closing off the manifold, which is due to the underlying grid.
         
         :param f: The signed-distance functor, containing this function signature: `def sdf(xyz : tuple) -> float:`, which returns the signed distance of a given point in R^3. Positive values are inside, negative outside.:param bounds: An axis-aligned box that defines the extent of the grid.:param edgeLength: Approximate maximum edge length of the triangles in the final result.  This affects grid spacing, and hence has a strong effect on performance.:param level: You can inset your Mesh by using a positive value, or outset it with a negative value.:return Mesh: This mesh is guaranteed to be manifold.Use Manifold.from_mesh(mesh) to create a Manifold
         """
         ...
-    
+
     def merge(self) -> bool:
         """
         Updates the mergeFromVert and mergeToVert vectors in order to create a
@@ -850,46 +869,48 @@ class Mesh:
         will report a Status if it is not manifold.
         """
         ...
-    
+
     @property
     def merge_from_vert(self) -> list[int]:
         ...
-    
+
     @property
     def merge_to_vert(self) -> list[int]:
         ...
-    
+
     @property
     def run_index(self) -> list[int]:
         ...
-    
+
     @property
     def run_original_id(self) -> list[int]:
         ...
-    
+
     @property
     def run_transform(self) -> numpy.typing.NDArray:
         ...
-    
+
     @property
     def tri_verts(self) -> numpy.typing.NDArray:
         ...
-    
+
     @property
     def vert_properties(self) -> numpy.typing.NDArray:
         ...
-    
+
+
 class OpType(Enum):
     """
     <attribute '__doc__' of 'OpType' objects>
     """
 
     Add: Any
-    
+
     Intersect: Any
-    
+
     Subtract: Any
-    
+
+
 def get_circular_segments(radius: float) -> int:
     """
     Determine the result of the SetMinCircularAngle(),
@@ -898,6 +919,7 @@ def get_circular_segments(radius: float) -> int:
     segments there will be.
     """
     ...
+
 
 def set_circular_segments(number: int) -> None:
     """
@@ -909,6 +931,7 @@ def set_circular_segments(number: int) -> None:
     constraint is applied.
     """
     ...
+
 
 def set_min_circular_angle(angle: float) -> None:
     """
@@ -922,6 +945,7 @@ def set_min_circular_angle(angle: float) -> None:
     """
     ...
 
+
 def set_min_circular_edge_length(length: float) -> None:
     """
     Sets a length constraint the default number of circular segments for the
@@ -932,6 +956,7 @@ def set_min_circular_edge_length(length: float) -> None:
     increase if the the segments hit the minimum angle. Default is 1.0.
     """
     ...
+
 
 def triangulate(polygons: list[FloatNx2], precision: float = -1) -> IntNx3:
     """
@@ -946,4 +971,3 @@ def triangulate(polygons: list[FloatNx2], precision: float = -1) -> IntNx3:
     polygon points in order.
     """
     ...
-
