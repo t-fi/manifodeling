@@ -1,5 +1,6 @@
 from typing import Any, Optional, overload, Callable
 from enum import Enum
+import numpy, numpy.typing
 
 
 class Floatx2:
@@ -258,6 +259,7 @@ class CrossSection:
         """
         ...
 
+    @staticmethod
     def square(size: Floatx2, center: bool = False) -> CrossSection:
         """
         Constructs a square with the given XY dimensions. By default it is
@@ -446,6 +448,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def compose(manifolds: list[Manifold]) -> Manifold:
         """
         Constructs a new manifold from a vector of other manifolds. This is a purely
@@ -455,6 +458,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def cube(size: Floatx3 = [1.0, 1.0, 1.0], center: bool = False) -> Manifold:
         """
         Constructs a unit cube (edge lengths all one), by default in the first
@@ -465,6 +469,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def cylinder(height: float, radius_low: float, radius_high: float = -1.0, circular_segments: int = 0,
                  center: bool = False) -> Manifold:
         """
@@ -489,6 +494,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def extrude(crossSection: CrossSection, height: float, n_divisions: int = 0, twist_degrees: float = 0.0,
                 scale_top: Floatx2 = (1.0, 1.0)) -> Manifold:
         """
@@ -525,6 +531,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def hull_points(pts: FloatNx3) -> Manifold:
         """
         Compute the convex hull of a set of points. If the given points are fewer
@@ -630,6 +637,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def reserve_ids(n: int) -> int:
         """
         Returns the first of n sequential new unique mesh IDs for marking sets of
@@ -638,6 +646,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def revolve(crossSection: CrossSection, circular_segments: int = 0,
                 revolve_degrees: float = 360.0) -> Manifold:
         """
@@ -704,6 +713,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def smooth(mesh: Mesh, sharpened_edges: list[int] = [],
                edge_smoothness: list[float] = []) -> Manifold:
         """
@@ -784,6 +794,7 @@ class Manifold:
         """
         ...
 
+    @staticmethod
     def tetrahedron() -> Manifold:
         """
         Constructs a tetrahedron centered at the origin with one vertex at (1,1,1)
