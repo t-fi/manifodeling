@@ -1,10 +1,6 @@
 from manifold3d import Manifold
 import numpy as np
-from time import time
-
-from utils import show_manifold
-
-t0 = time()
+from lib.utils import show_manifold
 
 cube_count = 20
 random_points = np.random.uniform(low=-1, high=1, size=(cube_count, 3))
