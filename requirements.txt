@@ -1,0 +1,8 @@
+sdfcad
+jupyterlab
+pyvista
+
+manifold3d
+trimesh
+pyglet<2
+pyrender
