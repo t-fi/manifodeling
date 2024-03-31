@@ -25,3 +25,7 @@ def show_mesh(mesh):
 
 def show_manifold(manifold):
     show_mesh(manifold2trimesh(manifold))
+
+
+def export_manifold(manifold, filename):
+    manifold2trimesh(manifold).export(filename)
