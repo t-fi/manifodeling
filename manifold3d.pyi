@@ -374,6 +374,22 @@ class Manifold:
     None
     """
 
+    def __add__(self, other):
+        """
+        Boolean union
+        """
+        ...
+    def __sub__(self, other):
+        """
+        Boolean difference
+        """
+        ...
+
+    def __xor__(self, other):
+        """
+        Boolean intersection
+        """
+
     def __init__(self, mesh: Mesh, property_tolerance: list[float] = []) -> None:
         """
         Convert a Mesh into a Manifold, retaining its properties and merging only
