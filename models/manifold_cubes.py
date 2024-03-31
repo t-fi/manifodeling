@@ -1,8 +1,5 @@
-import random
-
 from manifold3d import *
-import numpy as np
-from lib.utils import show_manifold
+from lib.utils import *
 
 cube_count = 200
 random_points = np.random.uniform(low=-1, high=1, size=(cube_count, 3))
@@ -41,13 +38,5 @@ if True:
 cube_pot += Manifold.cylinder(150, 80, 110).translate([0, 0, -40])
 cube_pot -= Manifold.cylinder(180, 75, 110).translate([0, 0, -35])
 
-
-def bowl(height, radius_low, radius_high, thickness):
-    outer_wall = Manifold.cylinder(height, radius_low, radius_high)
-    inner_wall = Manifold.cylinder(height - thickness, radius_low - thickness, radius_high - thickness)
-    return outer_wall - inner_wall.translate((0, 0, thickness))
-
-
-lower_bowl = bowl(150, 90, 100, 2).translate([0, 0, -40])
-
+export_manifold(cube_pot, "exported_stl/cube_topf.stl")
 show_manifold(cube_pot)
