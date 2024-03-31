@@ -18,6 +18,8 @@ hex_hole = Manifold.compose([c1, c2]).hull()
 
 screw_hole = Manifold.cylinder(10, 3.5, 3.5, 100)
 
-show_manifold(
-    Manifold.compose([main_body - screw_hole - hex_hole])
-)
+kloschraube = main_body - screw_hole - hex_hole
+
+export_manifold(kloschraube, "../exported_stl/kloschraube.stl")
+
+show_manifold(kloschraube)
