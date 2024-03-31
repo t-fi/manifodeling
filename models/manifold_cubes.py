@@ -1,4 +1,6 @@
-from manifold3d import Manifold
+import random
+
+from manifold3d import *
 import numpy as np
 from lib.utils import show_manifold
 
@@ -15,8 +17,37 @@ for point, angle in zip(normalized_points, random_angles):
     print(point, angle)
     base_box += Manifold.cube([1, 1, 1], True).rotate(angle).translate(point)
 
-#base_box ^= sphere
+layer_height = 35
+layer_count = 4
+cube_count = 10
 
-# Main
+cubes = []
+for i, radius in enumerate(np.linspace(90, 120, layer_count)):
+    for theta in np.linspace(0, 2 * np.pi - (2 * np.pi / cube_count), cube_count):
+        phase = i * 0.3
+        x = radius * np.sin(theta + phase)
+        y = radius * np.cos(theta + phase)
+        cube = Manifold.cube([2, 2, 2], True)
+        scale = np.random.uniform(15, 25, 1)[0]
+        cube = cube.scale([scale] * 3)
+        cube = cube.rotate(np.random.uniform(0, 90, 3))
+        cubes.append(cube.translate([x, y, i * layer_height]))
 
-show_manifold(base_box)
+cube_pot = sum(cubes[1:], cubes[0])
+
+if True:
+    set_min_circular_angle(5)
+
+cube_pot += Manifold.cylinder(150, 80, 110).translate([0, 0, -40])
+cube_pot -= Manifold.cylinder(180, 75, 110).translate([0, 0, -35])
+
+
+def bowl(height, radius_low, radius_high, thickness):
+    outer_wall = Manifold.cylinder(height, radius_low, radius_high)
+    inner_wall = Manifold.cylinder(height - thickness, radius_low - thickness, radius_high - thickness)
+    return outer_wall - inner_wall.translate((0, 0, thickness))
+
+
+lower_bowl = bowl(150, 90, 100, 2).translate([0, 0, -40])
+
+show_manifold(cube_pot)
