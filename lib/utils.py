@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import trimesh
 
@@ -28,4 +30,6 @@ def show_manifold(manifold):
 
 
 def export_manifold(manifold, filename):
+    if not Path(filename).parent.exists():
+        raise ValueError(f"The parent path of the desired storage location does not exist: {Path(filename).parent}")
     manifold2trimesh(manifold).export(filename)

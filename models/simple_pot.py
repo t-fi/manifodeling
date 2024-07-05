@@ -1,4 +1,5 @@
 from manifold3d import *
+
 from lib.utils import show_manifold, export_manifold
 
 if True:
