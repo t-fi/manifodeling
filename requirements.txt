@@ -2,3 +2,4 @@ manifold3d
 trimesh
 pyglet<2
 mypy
+nanobind-stubgen
